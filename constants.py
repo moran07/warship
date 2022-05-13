@@ -1,3 +1,4 @@
+#las variables van aqui y seran modificadas conforme el proyecto avanza
 WIDTH = 800
 HEIGHT = 500
 FPS = 60
