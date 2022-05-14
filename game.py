@@ -15,19 +15,27 @@ class Warship:
         self.surface_height = self.surface.get_rect().height
         self.background = pygame.transform.scale(pygame.image.load(os.path.join('image/universe.jpg')),(self.width, self.height))#agrega el background del juego
         pygame.display.set_caption(TITLE)
+        self.clock = pygame.time.Clock()
         self.surface.fill(BLUE)
-        self.speed = 1
+        self.speed = 10
         self.widhtbullet = 3
         self.heightbullet = 15
         self.colorbullet = (WHITE)
         self.spaceship = Spaceship(self)
         self.bullets = pygame.sprite.Group()#permite aumentar la cantidad de balas
-        self.total_bullets = 5
+        self.total_bullets = 100
         self.enemies = pygame.sprite.Group()
+        self.speed_Enemy = 4.0
+        self.fleet_speed = 10
+        self.fleet_direction = 1
+        pygame.mixer.music.load("sound/dbz.wav")
+        pygame.mixer.music.set_volume(1.0) #float 0.0 - 1.0
+        pygame.mixer.music.play(-1, 0.0)
         self._create_fleet()
     
     def run_game(self):#mantiene la ventana abierta con un loop
         while True:
+            self.clock.tick(FPS)
             for event in pygame.event.get():#nos regresa una lista de los eventos
                 if event.type == pygame.QUIT:
                         pygame.quit()
@@ -49,6 +57,7 @@ class Warship:
             self.surface.blit(self.background, (0, 0))
             self.spaceship.run()
             self.bullets.update()
+            self.update_Enemy()
 
             for bullet in self.bullets.copy():
                 if bullet.rect.bottom <= 0:#vamos a borrar las balas cuando superen la ventana
@@ -88,9 +97,26 @@ class Warship:
         enemy.x = enemy_width + 2* enemy_width * numeroEnemy
         enemy.rect.x = enemy.x
         enemy.rect.y = enemy.rect.height + 2*enemy.rect.height * fila
-        self.enemies.add(enemy)
+        self.enemies.add(enemy)    
                     
-                
+    def update_Enemy(self):
+        self.check_bordersFleet()
+        self.enemies.update()
+        if not self.enemies:
+            self.bullets.empty()
+            self._create_fleet()
+    
+    def check_bordersFleet(self):
+        for enemy in self.enemies.sprites():
+            if enemy.check_borders():
+                self.change_direction()
+                break
+
+    def change_direction(self):
+        for enemy in self.enemies.sprites():
+            enemy.rect.y += self.fleet_speed
+        self.fleet_direction *= - 1
+
 
 if __name__ == '__main__':
     w = Warship()
