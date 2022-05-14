@@ -1,10 +1,11 @@
+from pstats import Stats
 import pygame #agrega la libreria
 import sys, os 
 from spaceship import Spaceship
 from constants import *
 from bullet import Bullet
 from enemy import Enemy
-from estadisticas import Estadisticas
+from stats import Stats
 from time import sleep
 
 class Warship:
@@ -24,7 +25,7 @@ class Warship:
         self.heightbullet = 15
         self.colorbullet = (WHITE)
         self.remain_spaceships = 3
-        self.estadisticas = Estadisticas(self)
+        self.stas = Stats(self)
         self.spaceship = Spaceship(self)
         self.bullets = pygame.sprite.Group()#permite aumentar la cantidad de balas
         self.total_bullets = 100

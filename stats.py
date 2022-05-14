@@ -1,6 +1,6 @@
 import pygame
 
-class Estadisticas:
+class Stats:
     def __init__(self, w_game):
         self.restart()
         self.game = w_game
