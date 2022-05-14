@@ -1,4 +1,3 @@
-from pstats import Stats
 import pygame #agrega la libreria
 import sys, os 
 from spaceship import Spaceship
@@ -7,6 +6,7 @@ from bullet import Bullet
 from enemy import Enemy
 from stats import Stats
 from time import sleep
+from button import Button
 
 class Warship:
     def __init__(self):
@@ -19,13 +19,15 @@ class Warship:
         self.background = pygame.transform.scale(pygame.image.load(os.path.join('image/planet.jpg')),(self.width, self.height))#agrega el background del juego
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
-        self.surface.fill(BLUE)
+        self.surface.fill(RED)
         self.speed = 10
         self.widhtbullet = 3
         self.heightbullet = 15
         self.colorbullet = (WHITE)
         self.remain_spaceships = 3
-        self.stas = Stats(self)
+
+        self.stats = Stats(self)
+
         self.spaceship = Spaceship(self)
         self.bullets = pygame.sprite.Group()#permite aumentar la cantidad de balas
         self.total_bullets = 100
@@ -33,7 +35,8 @@ class Warship:
         self.speed_Enemy = 4.0
         self.fleet_speed = 10
         self.fleet_direction = 1
-        self.activated_game = True
+        self.activated_game = False
+        self.play_button = Button(self, "BARDOCK REVENGE")
 
         self.music = pygame.mixer.music.load("sound/dbz.wav")
         self.music = pygame.mixer.music.set_volume(2.0)
@@ -59,6 +62,10 @@ class Warship:
                         self.spaceship.move_right = False
                     if event.key == pygame.K_LEFT:
                         self.spaceship.move_left = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    mousePos = pygame.mouse.get_pos()
+                    self.checkButton(mousePos)
+
             if self.activated_game:
                 self.spaceship.move()            
                 self.surface.blit(self.background, (0, 0))
@@ -73,6 +80,9 @@ class Warship:
                 for bullet in self.bullets.sprites():
                     bullet.draw_bullet()
                 self.enemies.draw(self.surface)
+
+            if not self.activated_game:
+                self.play_button.drawButton()
 
             pygame.display.flip()
 
@@ -139,6 +149,17 @@ class Warship:
         else:
             self.activated_game = False
 
+    def checkButton(self, mousePos):
+        self.buttonP =self.play_button.rect.collidepoint(mousePos)
+        if self.buttonP and not self.activated_game:
+            self.stats.restart()
+            self.activated_game = True
+
+            self.enemies.empty()
+            self.bullets.empty()
+
+            self._create_fleet()
+            self.spaceship.center_spaceship()
 
 
 if __name__ == '__main__':
