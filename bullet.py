@@ -11,6 +11,10 @@ class Bullet(Sprite):
         self.rect.midtop = w_game.spaceship.rect.midtop
         self.game = w_game
         self.y = float(self.rect.y)#permite que bullet aumente los pixeles
+        self.bullets_allowed = 3
+        self.sound = pygame.mixer.Sound('sound/lazer.wav')
+        self.sound.play()
+        #self.sound = pygame.mixer.Sound.set_volume()
 
     def update(self):#hace que la bala se mueva
         self.y -= self.game.speed

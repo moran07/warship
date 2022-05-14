@@ -13,7 +13,7 @@ class Warship:
         self.surface = pygame.display.set_mode((self.width, self.height))#surface crea la ventana del juego
         self.surface_width = self.surface.get_rect().width
         self.surface_height = self.surface.get_rect().height
-        self.background = pygame.transform.scale(pygame.image.load(os.path.join('image/universe.jpg')),(self.width, self.height))#agrega el background del juego
+        self.background = pygame.transform.scale(pygame.image.load(os.path.join('image/planet.jpg')),(self.width, self.height))#agrega el background del juego
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
         self.surface.fill(BLUE)
@@ -28,9 +28,11 @@ class Warship:
         self.speed_Enemy = 4.0
         self.fleet_speed = 10
         self.fleet_direction = 1
-        pygame.mixer.music.load("sound/dbz.wav")
-        pygame.mixer.music.set_volume(1.0) #float 0.0 - 1.0
-        pygame.mixer.music.play(-1, 0.0)
+        self.music = pygame.mixer.music.load("sound/dbz.wav")
+        self.music = pygame.mixer.music.set_volume(1.0)
+        self.music = pygame.mixer.music.play(-1)
+        #pygame.mixer.music.set_volume(1.0) #float 0.0 - 1.0
+        #pygame.mixer.music.play(-1, 0.1)
         self._create_fleet()
     
     def run_game(self):#mantiene la ventana abierta con un loop

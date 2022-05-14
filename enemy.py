@@ -7,7 +7,7 @@ class Enemy(Sprite):
         super().__init__()
         self.surface = w_game.surface
 
-        self.image = pygame.image.load("image/nave.pro.png")
+        self.image = pygame.image.load("image/frieza.png")
         self.rect = self.image.get_rect()
 
 
