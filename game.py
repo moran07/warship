@@ -4,6 +4,8 @@ from spaceship import Spaceship
 from constants import *
 from bullet import Bullet
 from enemy import Enemy
+from estadisticas import Estadisticas
+from time import sleep
 
 class Warship:
     def __init__(self):
@@ -21,6 +23,8 @@ class Warship:
         self.widhtbullet = 3
         self.heightbullet = 15
         self.colorbullet = (WHITE)
+        self.remain_spaceships = 3
+        self.estadisticas = Estadisticas(self)
         self.spaceship = Spaceship(self)
         self.bullets = pygame.sprite.Group()#permite aumentar la cantidad de balas
         self.total_bullets = 100
@@ -28,11 +32,11 @@ class Warship:
         self.speed_Enemy = 4.0
         self.fleet_speed = 10
         self.fleet_direction = 1
+        self.activated_game = True
+
         self.music = pygame.mixer.music.load("sound/dbz.wav")
-        self.music = pygame.mixer.music.set_volume(1.0)
+        self.music = pygame.mixer.music.set_volume(2.0)
         self.music = pygame.mixer.music.play(-1)
-        #pygame.mixer.music.set_volume(1.0) #float 0.0 - 1.0
-        #pygame.mixer.music.play(-1, 0.1)
         self._create_fleet()
     
     def run_game(self):#mantiene la ventana abierta con un loop
@@ -54,22 +58,20 @@ class Warship:
                         self.spaceship.move_right = False
                     if event.key == pygame.K_LEFT:
                         self.spaceship.move_left = False
+            if self.activated_game:
+                self.spaceship.move()            
+                self.surface.blit(self.background, (0, 0))
+                self.spaceship.run()
+                self.bullets.update()
+                self.update_Enemy()
 
-            self.spaceship.move()            
-            self.surface.blit(self.background, (0, 0))
-            self.spaceship.run()
-            self.bullets.update()
-            self.update_Enemy()
+                for bullet in self.bullets.copy():
+                    if bullet.rect.bottom <= 0:#borrar las balas cuando superen la ventana
+                        self.bullets.remove(bullet)
 
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:#vamos a borrar las balas cuando superen la ventana
-                    self.bullets.remove(bullet)
-
-
-
-            for bullet in self.bullets.sprites():
-                bullet.draw_bullet()
-            self.enemies.draw(self.surface)
+                for bullet in self.bullets.sprites():
+                    bullet.draw_bullet()
+                self.enemies.draw(self.surface)
 
             pygame.display.flip()
 
@@ -92,7 +94,6 @@ class Warship:
             for numeroEnemy in range(numerodeEnemies):
                 self.__create__enemy(numeroEnemy, fila)
 
-
     def __create__enemy(self, numeroEnemy, fila):
         enemy = Enemy(self)
         enemy_width, alien_height = enemy.rect.size
@@ -101,12 +102,6 @@ class Warship:
         enemy.rect.y = enemy.rect.height + 2*enemy.rect.height * fila
         self.enemies.add(enemy)    
                     
-    def update_Enemy(self):
-        self.check_bordersFleet()
-        self.enemies.update()
-        if not self.enemies:
-            self.bullets.empty()
-            self._create_fleet()
     
     def check_bordersFleet(self):
         for enemy in self.enemies.sprites():
@@ -118,6 +113,31 @@ class Warship:
         for enemy in self.enemies.sprites():
             enemy.rect.y += self.fleet_speed
         self.fleet_direction *= - 1
+
+    def update_Enemy(self):
+        self.check_bordersFleet()
+        self.enemies.update()
+        if not self.enemies:
+            self.bullets.empty()
+            self._create_fleet()
+        if pygame.sprite.spritecollideany(self.spaceship, self.enemies):
+            self.spaceship_collition()
+
+    def spaceship_collition(self):
+        if self.remain_spaceships > 0:
+            self.remain_spaceships -= 1
+
+            self.enemies.empty()
+            self.bullets.empty()
+
+            self._create_fleet()
+            self.spaceship.center_spaceship()
+
+            sleep(0.5)
+
+        else:
+            self.activated_game = False
+
 
 
 if __name__ == '__main__':

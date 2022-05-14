@@ -19,3 +19,7 @@ class Spaceship:
     
     def run(self):
         self.surface.blit(self.image, self.rect)
+
+    def center_spaceship(self):
+        self.rect.midbottom = self.surface_rect.midbottom
+        self.x = float(self.rect.x)
