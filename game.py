@@ -5,12 +5,15 @@ from constants import *
 from bullet import Bullet
 from enemy import Enemy
 from stats import Stats
+from score import Score
 from time import sleep
 from button import Button
 
 class Warship:
     def __init__(self):
         pygame.init()#inicializa el modulo
+        self.score = 0
+        self.HighScore = 0
         self.width = 800
         self.height = 500
         self.surface = pygame.display.set_mode((self.width, self.height))#surface crea la ventana del juego
@@ -20,23 +23,26 @@ class Warship:
         pygame.display.set_caption(TITLE)
         self.clock = pygame.time.Clock()
         self.surface.fill(RED)
-        self.speed = 10
+        self.speed = 1
         self.widhtbullet = 3
         self.heightbullet = 15
-        self.colorbullet = (WHITE)
+        self.colorbullet = (BLUE)
         self.remain_spaceships = 3
-
+        self.speed_spaceship = 5
         self.stats = Stats(self)
+        self.scoreP = Score(self)
 
         self.spaceship = Spaceship(self)
         self.bullets = pygame.sprite.Group()#permite aumentar la cantidad de balas
-        self.total_bullets = 100
+        self.total_bullets = 1000
         self.enemies = pygame.sprite.Group()
-        self.speed_Enemy = 4.0
+        self.speed_Enemy = 5.0
         self.fleet_speed = 10
         self.fleet_direction = 1
         self.activated_game = False
         self.play_button = Button(self, "BARDOCK REVENGE")
+        self.increase_speed = 4.0
+        self.defaultValues()
 
         self.music = pygame.mixer.music.load("sound/dbz.wav")
         self.music = pygame.mixer.music.set_volume(2.0)
@@ -80,6 +86,7 @@ class Warship:
                 for bullet in self.bullets.sprites():
                     bullet.draw_bullet()
                 self.enemies.draw(self.surface)
+                self.scoreP.showScore()
 
             if not self.activated_game:
                 self.play_button.drawButton()
@@ -130,7 +137,9 @@ class Warship:
         self.enemies.update()
         if not self.enemies:
             self.bullets.empty()
+            self.increased_speed()
             self._create_fleet()
+
         if pygame.sprite.spritecollideany(self.spaceship, self.enemies):
             self.spaceship_collition()
 
@@ -152,8 +161,11 @@ class Warship:
     def checkButton(self, mousePos):
         self.buttonP =self.play_button.rect.collidepoint(mousePos)
         if self.buttonP and not self.activated_game:
+            self.defaultValues()
             self.stats.restart()
             self.activated_game = True
+            self.score = 0
+            self.scoreP.prep_score()
 
             self.enemies.empty()
             self.bullets.empty()
@@ -161,6 +173,18 @@ class Warship:
             self._create_fleet()
             self.spaceship.center_spaceship()
 
+
+    def defaultValues(self):
+        self.speed_spaceship = 5.0
+        self.speed = 10
+        self.speed_enemies = 5.0
+
+        self.fleet_direction = 1
+
+    def increased_speed(self):
+        self.speed_spaceship *= self.increase_speed
+        self.speed *= self.increase_speed
+        self.speed_enemies *= self.increase_speed
 
 if __name__ == '__main__':
     w = Warship()

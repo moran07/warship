@@ -10,12 +10,13 @@ class Spaceship:
         self.rect.midbottom = self.surface_rect.midbottom
         self.move_right = False
         self.move_left = False
+        self.speed = w_game.speed_spaceship
 
     def move(self):
         if self.move_right and self.rect.right < self.surface_rect.right:
-            self.rect.x += 5
+            self.rect.x += self.speed
         if self.move_left and self.rect.left > 0:
-            self.rect.x -= 5
+            self.rect.x -= self.speed
     
     def run(self):
         self.surface.blit(self.image, self.rect)

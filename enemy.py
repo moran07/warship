@@ -16,6 +16,7 @@ class Enemy(Sprite):
 
         self.rect.x = self.rect.width #dejar un espacio que sea igual al ancho y al alto del enemy
         self.rect.y = self.rect.height
+    
 
 
         self.x = float(self.rect.x)#es para tener registro de la posicion orizontal
@@ -30,6 +31,5 @@ class Enemy(Sprite):
         surface_rect = self.surface.get_rect()
         if self.rect.right >= surface_rect.right or self.rect.left <= 0:
             return True
-        self.bullets = self.game.bullets
-        self.enemies = self.game.enemies
-        strikes = pygame.sprite.groupcollide(self.bullets, self.enemies, True, True)
+
+
