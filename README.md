@@ -16,15 +16,18 @@
 5. Al finalizar, el juego presentará una leyenda con el mensaje BARDOCK REVENGE, solo debes dar click para volver a jugar.
 
 ## Instalar
-- Puedes jugar BARDOCK REVENGE clonando este repositorio:
-python
+Puedes jugar Bardock Revenge clonando este repositorio:
+```python
 git clone https://github.com/moran07/warship.git
-- Posteriormente, deberás dirigirte a la carpeta del juego con el siguiente comando:
-python
+```
+Posteriormente, deberás dirigirte a la carpeta del juego con el siguiente comando:
+```python
 cd warship-main
-- Finalmente, para ejecutar el juego, deberás ejecutar este comando:
-python
+```
+Finalmente, para ejecutar el juego, deberás ejecutar este comando:
+```python
 python game.py
+```
 
 ## Tecnologías
 Tecnologías usadas en este proyecto:
