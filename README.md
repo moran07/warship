@@ -6,7 +6,7 @@
 
 ## Demo
 
-<a href='https://postimg.cc/mz6Y8d3Z' target='_blank'><img src='https://i.postimg.cc/mz6Y8d3Z/intro.gif' border='0' alt='intro'/></a>
+<a href='https://postimg.cc/bs9V3Jfr' target='_blank'><img src='https://i.postimg.cc/bs9V3Jfr/intro.gif' border='0' alt='intro'/></a>
 
 ## ¿Cómo jugar?
 1.  Al inicializar el juego, aparecera una ventana con un mensaje que dice, BARDOCK REVENGE, debes darle click al titulo para iniciar.
