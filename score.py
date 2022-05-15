@@ -1,5 +1,6 @@
 import pygame.font
-
+from pygame.sprite import Group
+from heart import Hearts
 from constants import WHITE
 
 class Score:
@@ -13,6 +14,8 @@ class Score:
         self.font = pygame.font.SysFont(None, 48)
         self.prep_score()
         self.prep_HighScore()
+        self.prep_hearts()
+
 
     def prep_score(self):
         self.scoreStr = str(self.game.score)
@@ -38,3 +41,13 @@ class Score:
     def showScore(self):
         self.surface.blit(self.scoreImage, self.score_rect)
         self.surface.blit(self.HighscoreImage, self.HighScore_rect)
+        self.hearts.draw((self.surface))
+
+
+    def prep_hearts(self):
+        self.hearts = Group()
+        for number_hearts in range(self.game.remain_spaceships):
+            heart = Hearts(self.game)
+            heart.rect.x = 25 + number_hearts * heart.rect.width
+            heart.rect.y = 25
+            self.hearts.add(heart)

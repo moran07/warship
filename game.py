@@ -146,6 +146,7 @@ class Warship:
     def spaceship_collition(self):
         if self.remain_spaceships > 0:
             self.remain_spaceships -= 1
+            self.scoreP.prep_hearts()
 
             self.enemies.empty()
             self.bullets.empty()
@@ -166,6 +167,8 @@ class Warship:
             self.activated_game = True
             self.score = 0
             self.scoreP.prep_score()
+            self.remain_spaceships = 3
+            self.scoreP.prep_hearts()
 
             self.enemies.empty()
             self.bullets.empty()
