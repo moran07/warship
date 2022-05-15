@@ -9,11 +9,12 @@
 <a href='https://postimg.cc/mz6Y8d3Z' target='_blank'><img src='https://i.postimg.cc/mz6Y8d3Z/intro.gif' border='0' alt='intro'/></a>
 
 ## ¿Cómo jugar?
-1.  Al inicializar el juego, aparecera una ventanada con un mensaje que dice, BARDOCK REVENGE, debes darle click para iniciar.
-2.  Posteriormente, presiona la Barra Espaciadora para lanzar ragadas de ki a Frieza y presiona las teclas de los lados para desplazarte de derecha a izquierda.
+1.  Al inicializar el juego, aparecera una ventana con un mensaje que dice, BARDOCK REVENGE, debes darle click al titulo para iniciar.
+2.  Posteriormente, presiona la Barra Espaciadora para lanzar rafagas de ki a Frieza y presiona las teclas con flechas para desplazarte de derecha a izquierda.
 3. A medida que avanza de nivel, la velocidad aumenta, lo cual agrega un poco de dificultad al juego.
-4. El juego termina una vez que el Bardock pierde todas sus vidas, despues de haber colisionado con Frieza 3 veces.
-5. Al finalizar, el juego presentará una leyenda con el mensaje BARDOCK REVENGE, solo debes dar click para volver a jugar.
+4. El juego termina una vez que Bardock pierde todas sus vidas despues de haber colisionado con Frieza 3 veces. las cuales son representadas con esferas del dragon.
+5. Una vez terminada la partida, se vuelve a empezar dando click al nombre "Bardock revenge", pero con diferencia de que el puntaje mas alto de la partida pasada se mantiene en la parte superior del centro de la pantalla y el nuevo puntaje en la parte superior derecha. 
+
 
 ## Instalar
 Puedes jugar Bardock Revenge clonando este repositorio:
